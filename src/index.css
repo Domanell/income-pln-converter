@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+:root {
+	font-family:
+		system-ui,
+		-apple-system,
+		Helvetica,
+		Arial,
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Tailwind v4 preflight strips the browser default text color;
+   restore it explicitly so all text is readable on white backgrounds. */
+body {
+	color: #171717;
+	background-color: #f3f4f6;
+	min-width: 320px;
+	min-height: 100vh;
+}
+
+button {
+	cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		color: #213547;
+		background-color: #ffffff;
+	}
+	a:hover {
+		color: #747bff;
+	}
+}
