@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# Foreign Income to PLN Converter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript + Vite app for converting foreign income amounts into Polish złoty (PLN) using official NBP exchange rates. Designed for PIT-36 / PIT/ZG tax reporting.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Paste or enter transactions (date & amount) in any order
+- Select source currency (UAH, EUR, USD, GBP)
+- Fetches historical NBP rates (Table A/B) for each transaction date
+- Handles Polish public holidays and weekends automatically
+- Shows conversion results in a sortable table
+- Export results as CSV (Excel-ready) or copy to clipboard
+- All calculations are client-side, no data leaves your browser
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technical Details
 
-## Expanding the ESLint configuration
+- **Stack:** React 19, TypeScript, Vite, Tailwind CSS 4
+- **Exchange rates:** Official NBP API (api.nbp.pl), Table A/B fallback for UAH
+- **Date parsing:** Accepts multiple formats (e.g. 01.01.2024, 2024-01-01, 01/01/2024)
+- **CSV export:** Excel-friendly (semicolon delimiter, UTF-8 BOM)
+- **Privacy:** All calculations are performed locally in your browser
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Example Input
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+01.01.2024    4500,00
+01.02.2024    4500,00
+01.03.2024    4600,50
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Notes
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- NBP mid rate is taken from the last working day before the income date, as required by Polish tax law (Art. 11a updof)
+- Handles weekends and Polish public holidays automatically
+- For PIT-36, enter the total PLN value in the PIT/ZG attachment
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+**License:** MIT
